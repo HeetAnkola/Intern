@@ -17,6 +17,7 @@ function Invertory(props) {
   const [image, setImage] = useState("");
   const [tempid, settempid] = useState("");
   const [isEdit, setIsEdit] = useState(false);
+  const [URL , setURL] = useState("");
   
 
   let c = 1;
@@ -24,7 +25,7 @@ function Invertory(props) {
     const postListRef = ref(db, "item");
     const newPostRef = push(postListRef);
     const id = uuidv4();
-    if(brandname!=="" && productname!=="" && ram!=="" && storage!=="" && ScreenSize!=="" && ScreenType!=="" && price!=="" && description!=="" && image!==""){
+    if(brandname!=="" && productname!=="" && ram!=="" && storage!=="" && ScreenSize!=="" && ScreenType!=="" && price!=="" && description!=="" && image!=="" && URL!==""){
     set(newPostRef, {
       id: id,
       name: brandname,
@@ -36,6 +37,7 @@ function Invertory(props) {
       ScreenSize: ScreenSize,
       ScreenType: ScreenType,
       image: image,
+      url: URL,
     }).then(() => {
       console.log("item added");
       setBrandName("");
@@ -47,6 +49,7 @@ function Invertory(props) {
       setPrice("");
       setDescription("");
       setImage("");
+      setURL("");
     }).catch((error) => {
       alert(error.message);
     }
@@ -56,7 +59,6 @@ function Invertory(props) {
     }
   };
   const handleedit = (data) => {
-    console.log(data);
     setIsEdit(true);
     settempid(data.key);
     setBrandName(data.item.name);
@@ -68,6 +70,7 @@ function Invertory(props) {
     setPrice(data.item.price);
     setDescription(data.item.description);
     setImage(data.item.image);
+    setURL(data.item.url);
   }
 
   const handleupdate = (e) => {
@@ -81,6 +84,7 @@ function Invertory(props) {
       ScreenSize: ScreenSize,
       ScreenType: ScreenType,
       image: image,
+      url: URL,
     }).then(() => {
       console.log("item updated");
       setIsEdit(false);
@@ -94,6 +98,7 @@ function Invertory(props) {
       setDescription("");
       setImage("");
       settempid("");
+      setURL("");
     }).catch((error) => {
       alert(error.message);
     }
@@ -115,6 +120,7 @@ function Invertory(props) {
             <th scope="col">Screen Size</th>
             <th scope="col">Price</th>
             <th scope="col">Image</th>
+            <th scope="col">URL</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -148,7 +154,11 @@ function Invertory(props) {
                       style={{ width: "10rem" }}
                       alt={data.item.name}
                     />
-                  </td></>) : (<><td>
+                  </td>
+                  <td><a href={data.item.url} target="_blank" rel="noreferrer">
+                    <button className="btn btn-primary">URL</button></a>
+                  </td>
+                  </>) : (<><td>
                     <input
                       type="text"
                       className="form-control"
@@ -228,7 +238,16 @@ function Invertory(props) {
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
                       />
-                    </td></>)}
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="URL"
+                        value={URL}
+                        onChange={(e) => setURL(e.target.value)}
+                        />
+                      </td></>)}
                 {isEdit ? (<><td>
                   <button className="btn btn-danger" onClick={handleupdate}>
                     Update
@@ -348,10 +367,20 @@ function Invertory(props) {
               />
             </td>
             <td>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="URL"
+                value={URL}
+                onChange={(e) => setURL(e.target.value)}
+                />
+            </td>
+            <td>
               <button className="btn btn-primary" onClick={addItem}>
                 Add
               </button>
-            </td></>) : (<></>) }
+            </td>
+            </>) : (<></>) }
           </tr>
         </tbody>
       </table>

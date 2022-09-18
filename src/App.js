@@ -59,13 +59,12 @@ function App() {
             <div className='App'>
                 <Navbar data={data} user={user}/>
                 <Routes>
-                <Route path="/Invertory" element={<Invertory data={data} email={email} />}/>
+                  <Route path="/Invertory" element={<Invertory data={data} email={email} />}/>
                   <Route path="/" element={<Home data={data}/>} />
                   <Route path="/Login" element={<Login />} />
                   <Route path="/SignUP" element={<SignUP />} />
                   <Route path="/ProductDetail/:id" element={<ProductDetail data={data}/>} />
                   <Route path="*" element={<h1>404 Not Found</h1>} />
-                  
                 </Routes>
               </div>
   ):(

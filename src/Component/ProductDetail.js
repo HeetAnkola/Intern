@@ -9,7 +9,6 @@ function ProductDetail(props){
     //create a variable to store the data of the product
     const product = props.data.find((item) => item.item.id === id);
     //check if the product is found
-    
     if(product){
     return(
         <div className="container">
@@ -27,7 +26,7 @@ function ProductDetail(props){
                     <strong>Internal Storage</strong> : {product.item.InternalStorage}<br/>
                     <strong>Screen Type</strong> : {product.item.ScreenType}<br/>
                     <strong>Screen Size</strong> : {product.item.ScreenSize}<br/>
-                    
+                    <a href={product.item.url} target="_blank" rel="noreferrer"><button className="btn btn-primary" >Buy Now</button></a>
                 </div>
             </div>
         </div>
